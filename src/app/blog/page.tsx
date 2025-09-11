@@ -1,5 +1,6 @@
 // app/blog/page.tsx
 import Layout from '../../components/Layout';
+import NewsletterForm from '../../components/NewsletterForm';
 import Link from 'next/link';
 import { blogPosts } from '../../lib/blogs';
 
@@ -29,6 +30,7 @@ export default function BlogListPage() {
             </div>
           ))}
         </div>
+        <NewsletterForm />
       </div>
     </Layout>
   );

@@ -1,98 +1,79 @@
-// // app/ritual-generator/page.tsx
-// import Layout from '../../components/Layout';
-// import Link from 'next/link';
-
-// export default function RitualGeneratorPage() {
-//   return (
-//     <Layout>
-//       <div className="flex flex-col items-center text-center">
-//         <h1 className="text-3xl md:text-5xl font-bold font-serif text-[#B8860B] mb-4">
-//           The Full Ritual Generator
-//         </h1>
-//         <p className="text-lg text-gray-300 max-w-2xl mb-8">
-//           Unlock the full power of the AI Oracle. Get detailed, personalized rituals for any intention, from cleansing your space to manifesting your desires.
-//         </p>
-
-//         {/* The paid tool's form and AI output will go here */}
-//         <div className="w-full max-w-4xl bg-gray-800 p-8 rounded-lg shadow-lg">
-//           <form className="flex flex-col gap-4">
-//             <textarea
-//               className="w-full h-48 p-4 rounded-md bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400 text-white"
-//               placeholder="Describe your intention and any specific elements you want to include (e.g., 'A full moon ceremony for spiritual growth using fire and crystals')."
-//             ></textarea>
-//             <button
-//               type="submit"
-//               className="px-6 py-3 bg-[#B8860B] hover:bg-[#a17a0a] rounded-md text-[#2E2B59] font-semibold transition-colors duration-300"
-//             >
-//               Generate Ritual
-//             </button>
-//           </form>
-
-//           {/* This is the area where the gated content will appear */}
-//           <div className="mt-8 prose prose-invert text-left max-w-none">
-//             <h2 className="text-2xl font-bold text-white mb-4">Your Ritual Teaser:</h2>
-//             <p className="italic text-gray-400">
-//               {/* This is where the first paragraph of the AI-generated ritual will be */}
-//               A powerful ritual for spiritual growth begins with the cleansing flame of a single candle.
-//             </p>
-//             <p className="text-gray-400">
-//               The flickering light represents your inner fire and the transformative energy of the universe...
-//             </p>
-//             <div className="mt-8 text-center">
-//               <Link href="https://6801801549663.gumroad.com/l/nayuj" target="_blank" rel="noopener noreferrer">
-//                 <div className="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white font-bold transform hover:scale-105 transition-all duration-300">
-//                   Unlock the Full Ritual & Download
-//                 </div>
-//               </Link>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </Layout>
-//   );
-// }
-
 // app/ritual-generator/page.tsx
 'use client';
 import { useState } from 'react';
 import Layout from '../../components/Layout';
+import PromptSelector from '../../components/PromptSelector'; 
+import { fullGeneratorPrompts } from '../../lib/mocks';
+import { stripHtml } from '@/lib/utils';
 import Link from 'next/link';
-import { fullRitualPrompts, fullRitualResponses } from '../../lib/mocks';
 
 export default function RitualGeneratorPage() {
-  const [prompt, setPrompt] = useState('');
-  const [response, setResponse] = useState('');
-  const [isUnlocked, setIsUnlocked] = useState(false);
+    const [prompt, setPrompt] = useState('');
+    const [ritual, setRitual] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-  const handlePromptClick = (selectedPrompt: string) => {
-    setPrompt(selectedPrompt);
-    setResponse(fullRitualResponses[selectedPrompt] || 'Response not found for this prompt.');
-    setIsUnlocked(false); // Reset unlock status
-  };
+    const handleGenerateRitual = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setRitual('');
+        setError(null);
 
-  const handleGenerate = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setResponse(fullRitualResponses[prompt] || 'No pre-generated response for this prompt. You will get a unique ritual from the AI once integrated!');
-    setIsUnlocked(false); // Reset unlock status
-  };
+        try {
+            const response = await fetch('/api/generate-ritual', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt }),
+            });
 
-  // This will eventually be called after a successful Gumroad purchase
-  // For now, we'll use a mock button to simulate it.
-  const handleUnlock = () => {
-    setIsUnlocked(true);
-  };
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
 
-  const getTeaserContent = () => {
-    if (!response) return 'Your ritual teaser will appear here...';
-    // This is a simple way to split by a section for the teaser.
-    // In a real app, we'd have a more robust way to handle this.
-    const parts = response.split('</p>');
-    return `<h2 className="text-2xl font-bold font-serif text-[#B8860B] mb-2">Your Ritual Teaser:</h2><p classname="italic text-gray-400">${parts[0]}</p>`;
-  };
+            const data = await response.json();
+            if (data.success) {
+                setRitual(data.ritual);
+            } else {
+                setError(data.error);
+            }
+        } catch (err) {
+            setError('Failed to fetch ritual from the AI. Please try again.');
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    
+    // Split the AI response into teaser and full content
+    const getTeaserAndFullContent = (fullResponse: string) => {
+        // Find the index where the full ritual starts
+        const splitIndex = fullResponse.indexOf('</div>');
+        if (splitIndex === -1) {
+            // Fallback for a malformed response
+            return {
+                teaser: fullResponse.substring(0, 250) + '...',
+                full: fullResponse,
+            };
+        }
+        const teaser = fullResponse.substring(0, splitIndex + 6);
+        const full = fullResponse.substring(splitIndex + 6);
+        return { teaser, full };
+    };
 
-  return (
-    <Layout>
-      <div className="flex flex-col items-center text-center">
+    const handleCopy = async (text: string) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            alert('Teaser copied to clipboard!');
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    const content = getTeaserAndFullContent(ritual);
+
+    return (
+        <Layout>
+        <div className="flex flex-col items-center text-center">
         <h1 className="text-3xl md:text-5xl font-bold font-serif text-[#B8860B] mb-4">
           The Full Ritual Generator
         </h1>
@@ -100,59 +81,72 @@ export default function RitualGeneratorPage() {
           Unlock the full power of the AI Oracle. Get detailed, personalized rituals for any intention, from cleansing your space to manifesting your desires.
         </p>
 
-        <div className="w-full max-w-4xl bg-gray-800 p-8 rounded-lg shadow-lg">
-          <form onSubmit={handleGenerate} className="flex flex-col gap-4">
-            <textarea
-              className="w-full h-48 p-4 rounded-md bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400 text-white"
-              placeholder="Describe your intention and any specific elements you want to include (e.g., 'A full moon ceremony for spiritual growth using fire and crystals')."
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-            ></textarea>
-            <button
-              type="submit"
-              className="px-6 py-3 bg-[#B8860B] hover:bg-[#a17a0a] rounded-md text-[#2E2B59] font-semibold transition-colors duration-300"
-            >
-              Generate Ritual
-            </button>
-          </form>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl">
+          {/* Left Column: Input and Form */}
+          <div className="bg-gray-800 p-8 rounded-lg shadow-xl border border-gray-700">
+            <h3 className="text-2xl font-bold font-serif text-white mb-4">Craft Your Ritual</h3>
+            <form onSubmit={handleGenerateRitual} className="flex flex-col gap-4">
+              <textarea
+                className="w-full h-48 p-4 rounded-md bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-400 text-white"
+                placeholder="Describe your intention and any specific elements you want to include (e.g., 'A full moon ceremony for spiritual growth using fire and crystals')."
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                disabled={isLoading}
+              ></textarea>
+              <button
+                type="submit"
+                className="px-6 py-3 bg-[#B8860B] hover:bg-[#a17a0a] rounded-md text-[#2E2B59] font-semibold transition-colors duration-300 cursor-pointer"
+                disabled={isLoading || !prompt.trim()}
+              >
+                {isLoading ? 'Generating...' : 'Generate Ritual'}
+              </button>
+            </form>
+          </div>
 
-          {response && (
-            <div className="mt-8 prose prose-invert text-left max-w-none">
-              {!isUnlocked ? (
-                <>
-                  <div dangerouslySetInnerHTML={{ __html: getTeaserContent() }} />
-                  <div className="mt-8 text-center">
-                    <button
-                      onClick={handleUnlock}
-                      className="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white font-bold transform hover:scale-105 transition-all duration-300"
-                    >
-                      Unlock the Full Ritual & Download
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <div dangerouslySetInnerHTML={{ __html: response }} />
-              )}
+          {/* Right Column: Output */}
+          <div className="bg-gray-800 p-8 rounded-lg shadow-xl border border-gray-700">
+            <h3 className="text-2xl font-bold font-serif text-white mb-4">Your Starter Ritual:</h3>
+            {error && (
+              <div className="text-lg text-red-500 font-medium mb-4">{error}</div>
+            )}
+            {ritual ? (
+              <div className="mt-8 prose prose-invert text-left max-w-none">
+                {/* Teaser Content Section */}
+                <div>
+                    <div dangerouslySetInnerHTML={{ __html: content.teaser }} />
+                    <div className="flex justify-end mt-4">
+                        <button
+                            onClick={() => handleCopy(stripHtml(content.teaser))}
+                            className="flex items-center space-x-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-full text-white text-sm font-semibold transition-colors cursor-pointer"
+                        >
+                            <span>Copy Teaser</span>
+                        </button>
+                    </div>
+                </div>
+                <div className="text-center italic mt-4 text-gray-400">
+                    <p>The full AI Access will include supplies needed, full ceremony, and other content!</p>
+                </div> 
+                
             </div>
-          )}
+            ) : (
+              <p className="text-lg font-medium text-center italic text-gray-400">
+                Your ritual starter content will appear here.
+              </p>
+            )}
+          </div>
         </div>
-
-        <h2 className="text-xl md:text-2xl font-bold font-serif mt-10 mb-4">
-          Try these prompts:
-        </h2>
-        <div className="flex flex-wrap justify-center gap-4 max-w-3xl mb-8">
-          {fullRitualPrompts.map((p, index) => (
-            <button
-              key={index}
-              onClick={() => handlePromptClick(p)}
-              className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-full text-sm transition-colors"
-            >
-              {p}
-            </button>
-          ))}
+        {ritual && (
+        <div className="mt-8 text-center">
+            <Link href="https://6801801549663.gumroad.com/l/nayuj" target="_blank" rel="noopener noreferrer">
+                <div className="px-8 py-4 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white font-bold transform hover:scale-105 transition-all duration-300">
+                    Unlock the Full Ritual & Download
+                </div>
+            </Link>
         </div>
-
+        )}
+        <PromptSelector prompts={fullGeneratorPrompts} onPromptSelect={setPrompt} />
       </div>
+           
     </Layout>
-  );
+    );
 }

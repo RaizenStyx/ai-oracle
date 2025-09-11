@@ -1,6 +1,7 @@
 // app/blog/[slug]/page.tsx
 import { notFound } from 'next/navigation';
 import Layout from '../../../components/Layout';
+import NewsletterForm from '../../../components/NewsletterForm';
 import { blogPosts } from '../../../lib/blogs';
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
@@ -19,6 +20,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             <div dangerouslySetInnerHTML={{ __html: post.content }} />
           </div>
         </article>
+        <NewsletterForm />
       </div>
     </Layout>
   );

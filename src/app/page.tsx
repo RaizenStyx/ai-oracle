@@ -1,5 +1,6 @@
 // app/page.tsx
 import Link from 'next/link';
+import NewsletterForm from '../components/NewsletterForm';
 
 export default function HomePage() {
 
@@ -26,6 +27,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
+         <NewsletterForm />
       </div>
     </div>
   );
