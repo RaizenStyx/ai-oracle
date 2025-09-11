@@ -9,7 +9,7 @@ export default function PrivacyPolicyPage() {
         <p>Your privacy is important to us. This Privacy Policy explains what information we collect, how we use it, and what choices you have.</p>
 
         <h3>Information We Collect</h3>
-        <p>When you use the AI Oracle, we may collect information you provide directly, such as your email address if you sign up for our mailing list or make a purchase. We do not collect any personal information you may input into the tool's text box, as this is processed by a third-party AI service and is not stored by us.</p>
+        <p>When you use the AI Oracle, we may collect information you provide directly, such as your email address if you sign up for our mailing list or make a purchase. We do not collect any personal information you may input into the tool&apos;s text box, as this is processed by a third-party AI service and is not stored by us.</p>
         
         <h3>How We Use Your Information</h3>
         <p>We use the information we collect to:</p>
