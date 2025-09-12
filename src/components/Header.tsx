@@ -20,9 +20,6 @@ export default function Header() {
               height={50}
               className="hover:scale-105 transition-transform cursor-pointer"
             />
-             {/* <span className="text-xl font-bold font-serif text-[#B8860B] hover:text-white transition-colors cursor-pointer">
-              AI Oracle
-            </span> */}
           </div>
         </Link>
 
