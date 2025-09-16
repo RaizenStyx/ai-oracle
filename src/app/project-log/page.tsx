@@ -1,6 +1,5 @@
 // app/project-log/page.tsx
 import Layout from '../../components/Layout';
-import NewsletterForm from '../../components/NewsletterForm';
 import { projectUpdates } from '../../lib/project-log';
 
 export default function ProjectLogPage() {
@@ -24,7 +23,6 @@ export default function ProjectLogPage() {
             </div>
           ))}
         </div>
-        <NewsletterForm />
       </div>
     </Layout>
   );

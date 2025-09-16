@@ -27,7 +27,9 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
+        <div className="my-16 w-full">
          <NewsletterForm />
+         </div>
       </div>
     </div>
   );

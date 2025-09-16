@@ -10,18 +10,12 @@ export async function POST(request: Request) {
   try {
     const { prompt } = await request.json();
 
-    // The updated, more specific prompt
     const newPrompt = `
-      You are a mystical and knowledgeable guide. Create a detailed, inspiring ritual or ceremony based on the following intention: "${prompt}".
+      You are a mystical and knowledgeable guide. Create a detailed, inspiring, and comprehensive ritual or ceremony based on the following intention: "${prompt}".
 
-      At the very beginning of your response, please provide a title and a summary of the ritual. The title and summary together must be under 250 characters.
-
-      Format the entire response using HTML tags. The title should be in an <h2> tag and the summary should be in a <p> tag. Wrap both the title and the summary in a single <div class="ritual-teaser"> element.
-
-      Following the teaser, provide the full, comprehensive ritual. It should be easy to follow and include sections like "Supplies" and "The Ceremony" with headings (<h3>) and lists (<ul> or <ol>). Be creative, using elements from nature and spiritual practices.
+      Format the entire response using HTML tags. It should include a clear title (<h2>), an introductory paragraph, a list of supplies (<ul>), and a detailed step-by-step ceremony (<ul> or <ol>). Be creative, using elements from nature and spiritual practices. The ritual should be comprehensive and easy to follow.
     `;
 
-    // Use a powerful, low-cost model like gpt-3.5-turbo-instruct
     const completion = await openai.completions.create({
       model: "gpt-3.5-turbo-instruct",
       prompt: newPrompt,

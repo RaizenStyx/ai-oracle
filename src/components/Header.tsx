@@ -44,14 +44,19 @@ export default function Header() {
               </Link>
             </div>
           </div>
-          <Link href="/blog">
+          <Link href="/news">
             <span className="hover:text-gray-300 transition-colors cursor-pointer">
-              Blog
+              News
             </span>
           </Link>
           <Link href="/project-log">
             <span className="hover:text-gray-300 transition-colors cursor-pointer">
               Project Log
+            </span>
+          </Link>
+          <Link href="/blog">
+            <span className="hover:text-gray-300 transition-colors cursor-pointer">
+              Blog
             </span>
           </Link>
         </div>
@@ -87,14 +92,19 @@ export default function Header() {
               Ritual Generator
             </span>
           </Link>
-          <Link href="/blog">
+          <Link href="/news">
             <span className="text-2xl font-semibold hover:text-gray-300 transition-colors cursor-pointer" onClick={() => setIsMobileMenuOpen(false)}>
-              Blog
+              News
             </span>
           </Link>
           <Link href="/project-log">
             <span className="text-2xl font-semibold hover:text-gray-300 transition-colors cursor-pointer" onClick={() => setIsMobileMenuOpen(false)}>
               Project Log
+            </span>
+          </Link>
+          <Link href="/blog">
+            <span className="text-2xl font-semibold hover:text-gray-300 transition-colors cursor-pointer" onClick={() => setIsMobileMenuOpen(false)}>
+              Blog
             </span>
           </Link>
         </div>

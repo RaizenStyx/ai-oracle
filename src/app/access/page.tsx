@@ -86,7 +86,7 @@ export default function AccessPage() {
         URL.revokeObjectURL(url); // Clean up the URL object
     };
 
-     const content = getTeaserAndFullContent(ritual);
+     //const content = getTeaserAndFullContent(ritual);
     
   return (
     <Layout>
@@ -120,18 +120,23 @@ export default function AccessPage() {
                 </div>
                 {/* Right Column: Output */}
                  <div className="bg-gray-800 p-8 rounded-lg shadow-xl border border-gray-700">
-                <h3 className="text-2xl font-bold font-serif text-white mb-4">Your Ritual Overview:</h3>
+                <h3 className="text-2xl font-bold font-serif text-white mb-4">Your AI Oracle</h3>
                 {error && (
                     <div className="text-lg text-red-500 font-medium mb-4">{error}</div>
                 )}
                 {ritual ? (
                     <div className="mt-8 prose prose-invert text-left max-w-none">
                     {/* Teaser Content Section */}
-                    <div dangerouslySetInnerHTML={{ __html: content.teaser }} />                
+                    <div className='text-center mb-8'>
+                        <h3 className="text-xl font-bold text-white mb-4">Thank you for using the AI Oracle</h3>
+                        <div>
+                        We appreciate your support! As a full access user, you can generate detailed rituals complete with supplies and ceremony steps. The full content is below, and can be copied or downloaded.
+                        </div> 
+                    </div>                
             </div>
             ) : (
               <p className="text-lg font-medium text-center italic text-gray-400">
-                Your ritual overview will appear here.
+                Thank you for using the full AI Oracle. Your detailed ritual content will appear below once generated.
               </p>
             )}
           </div>
@@ -139,7 +144,7 @@ export default function AccessPage() {
          {ritual && (
             <div className="mt-12 w-full max-w-6xl bg-gray-800 p-8 rounded-lg shadow-xl border border-gray-700">
                 <div className="mt-8 prose prose-invert text-left max-w-none">     
-                    <div dangerouslySetInnerHTML={{ __html: content.full }} />
+                    <div dangerouslySetInnerHTML={{ __html: ritual }} />
                         <div className="flex justify-end mt-4">
                         <button
                             onClick={handleDownload}

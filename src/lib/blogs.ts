@@ -52,4 +52,47 @@ export const blogPosts = [
       </div>
     `,
   },
+  {
+    id: 'mindful-journaling-spiritual-growth',
+    title: 'Mindful Journaling: A Path to Spiritual Growth',
+    date: 'September 5, 2025',
+    excerpt: 'Journaling is more than just writing down your thoughts. It\'s a powerful spiritual practice. Learn how mindful journaling can help you find clarity and purpose...',
+    content: `
+      <h2>Mindful Journaling: A Path to Spiritual Growth</h2>
+      <p class="post-meta">Published on September 5, 2025</p>
+      <div class="blog-content">
+        <p>In our fast-paced world, it's easy to feel disconnected. Mindful journaling offers a simple yet profound way to reconnect with yourself, your thoughts, and your intentions. Unlike a traditional diary, mindful journaling is not about chronicling events; it's about observing your inner landscape with intention and without judgment.</p>
+        <h3>How to Start Mindful Journaling</h3>
+        <p>Find a quiet space and a comfortable position. Take a few deep, intentional breaths to ground yourself. Start with a simple question or a prompt. For example: "What is my intention for today?" or "What am I grateful for in this moment?" The goal is to write freely, allowing thoughts and feelings to flow onto the page without editing or censoring yourself.</p>
+        <h3>Benefits for Your Practice</h3>
+        <ul>
+          <li>**Clarity:** It helps you untangle complex emotions and thoughts, revealing a clearer path forward.</li>
+          <li>**Connection:** It deepens your connection to your intuition and inner wisdom.</li>
+          <li>**Gratitude:** It shifts your focus from what you lack to what you have, fostering a sense of abundance.</li>
+          <li>**Manifestation:** By writing down your desires and intentions, you're actively engaging in the process of manifestation.</li>
+        </ul>
+        <p>Mindful journaling is a powerful tool on its own. It's also a perfect companion to the Daily Intention tool on AI Oracle, as it provides a space for you to expand on the intentions you generate.</p>
+      </div>
+    `,
+  },
+  {
+    id: 'simple-rituals-for-beginners',
+    title: 'Simple Rituals for Beginners: A Guide to Getting Started',
+    date: 'September 12, 2025',
+    excerpt: 'Thinking about starting a ritual practice but don\'t know where to begin? We\'ve got you covered. Here are three simple, low-effort rituals you can do today...',
+    content: `
+      <h2>Simple Rituals for Beginners: A Guide to Getting Started</h2>
+      <p class="post-meta">Published on September 12, 2025</p>
+      <div class="blog-content">
+        <p>The word "ritual" can sound intimidating, conjuring images of elaborate ceremonies. But a ritual is simply an intentional action with a purpose. It can be as simple as lighting a candle to set an intention or drinking a cup of tea to find peace. Here are three simple rituals you can try today.</p>
+        <h3>1. The Morning Gratitude Ritual</h3>
+        <p>Before you get out of bed, close your eyes and take three deep breaths. As you exhale, release any stress or anxiety. On your last breath, think of one thing you are grateful for. Hold that feeling of gratitude in your heart for a moment before you start your day. This small act can shift your entire mindset.</p>
+        <h3>2. The Evening Release Ritual</h3>
+        <p>As you prepare for sleep, find a quiet moment to reflect on your day. Mentally or verbally state your intention to release any tensions, worries, or negative energies you may have picked up. You can visualize these things leaving your body with each exhale. This simple ritual helps clear your mind for a restful sleep.</p>
+        <h3>3. The Candle Intention Ritual</h3>
+        <p>Light a candle and hold a clear intention in your mind. Focus on the flickering flame as a symbol of your intention's energy. As the candle burns, it's a constant reminder of the intention you have set. This ritual can be used for anything from manifesting abundance to finding emotional clarity.</p>
+        <p>These simple practices are a great way to start. As you grow, the AI Oracle can help you craft more detailed and personalized rituals to meet your specific needs.</p>
+      </div>
+    `,
+  },
 ];
