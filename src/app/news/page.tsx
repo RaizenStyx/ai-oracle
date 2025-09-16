@@ -15,7 +15,7 @@ export default function NewsPage() {
               <span className="block text-indigo-600 mt-2">Crafting Your Path.</span>
             </h1>
             <p className="text-lg text-gray-50 leading-relaxed text-center sm:text-left opacity-90 animate-fade-in delay-200">
-              You've stumbled upon the digital sanctuary where intentions ignite. AI Oracle is your AI-powered guide, designed to streamline your spiritual workflow by generating rich, personalized rituals with unprecedented ease.
+              You&apos;ve stumbled upon the digital sanctuary where intentions ignite. AI Oracle is your AI-powered guide, designed to streamline your spiritual workflow by generating rich, personalized rituals with unprecedented ease.
             </p>
           </section>
 
@@ -29,7 +29,7 @@ export default function NewsPage() {
                 Say goodbye to spiritual guesswork and endless ritual research. With AI Oracle, you can swiftly generate compelling practices for daily focus, intricate ceremonies for special occasions, and personalized guides for your spiritual journey. Simply provide a high-level prompt, and watch as our advanced AI brings your intentions to life.
               </p>
               <p className="italic text-gray-400">
-                "Accelerate your creativity. Focus on your practice, not your research."
+                &quot;Accelerate your creativity. Focus on your practice, not your research.&quot;
               </p>
             </div>
 
@@ -68,7 +68,7 @@ export default function NewsPage() {
           <section className="space-y-10 p-8 bg-gray-800 rounded-xl shadow-xl ring-1 ring-[#B8860B]/20 border border-gray-700 flex flex-col justify-start">
             <div className="pt-10  mb-10 text-center">
               <h3 className="text-3xl font-bold text-gray-50 mb-6 flex items-center justify-center gap-3">
-                Support The AI Oracle's Vision
+                Support The AI Oracle&apos;s Vision
               </h3>
               <p className="text-lg text-gray-50 leading-relaxed mb-8">
                 The AI Oracle is a passion project, built by a solo developer dedicated to empowering spiritual seekers. If you believe in this vision and want to see the AI Oracle grow, consider supporting its development. Your contributions fuel future features and ensure this tool remains accessible to all.

@@ -43,22 +43,6 @@ export default function AccessPage() {
         }
     };
 
-    // Split the AI response into teaser and full content
-    const getTeaserAndFullContent = (fullResponse: string) => {
-        // Find the index where the full ritual starts
-        const splitIndex = fullResponse.indexOf('</div>');
-        if (splitIndex === -1) {
-            // Fallback for a malformed response
-            return {
-                teaser: fullResponse.substring(0, 250) + '...',
-                full: fullResponse,
-            };
-        }
-        const teaser = fullResponse.substring(0, splitIndex + 6);
-        const full = fullResponse.substring(splitIndex + 6);
-        return { teaser, full };
-    };
-
     const handleCopy = async (text: string) => {
         try {
             await navigator.clipboard.writeText(text);
@@ -85,8 +69,6 @@ export default function AccessPage() {
         document.body.removeChild(link);
         URL.revokeObjectURL(url); // Clean up the URL object
     };
-
-     //const content = getTeaserAndFullContent(ritual);
     
   return (
     <Layout>
